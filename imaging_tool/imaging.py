@@ -24,7 +24,7 @@ def image_disk(source_disk, dest_path, progress_callback):
 
 
 def get_disk_size(source_disk):
-    lsblk_command = ['lsblk', '-bno', 'SIZE', source_disk]
+    lsblk_command = ['lsblk', '-bndo', 'SIZE', source_disk]
     process = subprocess.run(lsblk_command, capture_output=True, text=True, check=True)
     return int(process.stdout.strip())
 
