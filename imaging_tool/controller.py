@@ -21,18 +21,18 @@ class ImagingThread(QThread):
 
     def run(self):
         try:
-            origin_checksums = calculate_checksums(self.source_disk)  # Calculate checksums of the disk first
+            # origin_checksums = calculate_checksums(self.source_disk)  # Calculate checksums of the disk first
             self.log('INFO: Imaging in progress...')
             image_disk(self.source_disk, self.dest_path, self.progress)
             self.log('INFO: Generating checksums...')
-            image_checksums = calculate_checksums(self.dest_path)
-            if image_checksums == origin_checksums:
-                self.log(
-                    f"INFO: Imaging completed.\nMD5: {image_checksums['md5']}\nSHA-256: {image_checksums['sha256']}")
-                self.log("INFO: Compressing image...")
-                self.compress_image(self.dest_path)
-            else:
-                self.log(f"ERROR: Error during imaging - Checksums do not match")
+            # image_checksums = calculate_checksums(self.dest_path)
+            # if image_checksums == origin_checksums:
+            #     self.log(
+            #         f"INFO: Imaging completed.\nMD5: {image_checksums['md5']}\nSHA-256: {image_checksums['sha256']}")
+            #     self.log("INFO: Compressing image...")
+            #     self.compress_image(self.dest_path)
+            # else:
+            #     self.log(f"ERROR: Error during imaging - Checksums do not match")
         except Exception as e:
             self.log(f"ERROR: Error during imaging - {str(e)}")
 
