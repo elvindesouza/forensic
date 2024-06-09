@@ -44,7 +44,7 @@ class ForensicImagingTool(QWidget):
 
     def populateDiskComboBox(self):
         disks = []
-        lsblk_output = subprocess.run(['lsblk', '-d', '-o', 'NAME'], capture_output=True, text=True)
+        lsblk_output = subprocess.run(['lsblk', '-d', '-o', 'PATH'], capture_output=True, text=True)
         if lsblk_output.returncode == 0:
             output_lines = lsblk_output.stdout.split('\n')
             output_lines[0]="Select Disk"
