@@ -17,7 +17,7 @@ def image_disk(source_disk, dest_path, progress_callback):
             if 'bytes' in output:
                 copied_size = extract_copied_size(output)
                 progress = (copied_size / total_size) * 100
-                progress_callback.emit(progress)
+                progress_callback.emit(int(progress))  # Emit the progress signal
 
     if process.returncode != 0:
         raise Exception("dd command failed")
