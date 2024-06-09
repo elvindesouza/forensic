@@ -21,18 +21,11 @@ class ImagingThread(QThread):
 
     def run(self):
         try:
-            # origin_checksums = calculate_checksums(self.source_disk)  # Calculate checksums of the disk first
             self.log('INFO: Imaging in progress...')
+            self.progress.emit(0)
             image_disk(self.source_disk, self.dest_path, self.progress)
             self.log('INFO: Generating checksums...')
-            # image_checksums = calculate_checksums(self.dest_path)
-            # if image_checksums == origin_checksums:
-            #     self.log(
-            #         f"INFO: Imaging completed.\nMD5: {image_checksums['md5']}\nSHA-256: {image_checksums['sha256']}")
-            #     self.log("INFO: Compressing image...")
-            #     self.compress_image(self.dest_path)
-            # else:
-            #     self.log(f"ERROR: Error during imaging - Checksums do not match")
+            self.progress.emit(100)
         except Exception as e:
             self.log(f"ERROR: Error during imaging - {str(e)}")
 
@@ -40,9 +33,7 @@ class ImagingThread(QThread):
         logger.debug(msg)
         self.status.emit(msg)
 
-    # compress_image method compresses the image file using the gzip command
     def compress_image(self, image_path):
-        # Use the gzip command to compress the image file
         compress_command = ['gzip', image_path]
         process = subprocess.run(compress_command, capture_output=True, text=True)
         logger.debug(process.stdout)
@@ -50,7 +41,6 @@ class ImagingThread(QThread):
             self.log("INFO: Compression completed successfully")
         else:
             self.log("ERROR: Compression failed")
-
 
 class Controller:
     def __init__(self, gui):
