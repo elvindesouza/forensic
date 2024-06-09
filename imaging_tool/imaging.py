@@ -2,7 +2,7 @@ import subprocess
 
 
 def image_disk(source_disk, dest_path, progress_callback):
-    dd_command = ['dd', f'if={source_disk}', f'of={dest_path}', 'bs=4M', 'status=progress']
+    dd_command = ['pkexec', 'dd', f'if={source_disk}', f'of={dest_path}', 'bs=4M', 'status=progress']
 
     process = subprocess.Popen(dd_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     total_size = get_disk_size(source_disk)
