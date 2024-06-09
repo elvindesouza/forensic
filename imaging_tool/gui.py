@@ -47,10 +47,10 @@ class ForensicImagingTool(QWidget):
         lsblk_output = subprocess.run(['lsblk', '-d', '-o', 'PATH'], capture_output=True, text=True)
         if lsblk_output.returncode == 0:
             output_lines = lsblk_output.stdout.split('\n')
-            output_lines[0]="Select Disk"
+            output_lines[0] = "Select Disk"
             for line in output_lines:  # Exclude the first line
                 disk_name = line.strip()
-                if disk_name and not disk_name.startswith('loop'):  # Exclude loop devices
+                if disk_name and 'loop' not in disk_name:  # Exclude loop devices
                     disks.append(disk_name)
         else:
             print("Error:", lsblk_output.stderr)
@@ -61,4 +61,4 @@ class ForensicImagingTool(QWidget):
     def openFileDialog(self):
         folder_path = QFileDialog.getExistingDirectory(self, "Select Folder")
         if folder_path:
-            self.destinationPath.setText(folder_path+"/disk.img")
+            self.destinationPath.setText(folder_path + "/disk.img")
